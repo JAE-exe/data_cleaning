@@ -75,3 +75,24 @@ ADD OwnerStateAddress NVARCHAR(255);
 
 UPDATE NHD
 SET OwnerStateAddress = PARSENAME(REPLACE(OwnerAddress,',','.'),1);
+
+
+ALTER TABLE NHD
+ALTER COLUMN SoldAsVacant VARCHAR(3); -- Adjust length as needed
+
+SELECT DISTINCT(SoldAsVacant)
+FROM NHD;
+
+UPDATE NHD
+SET SoldAsVacant = 
+	CASE
+	WHEN SoldAsVacant = 0 THEN 'NO'
+	WHEN SoldAsVacant = 1 THEN 'YES'
+	ELSE SoldAsVacant
+	END
+
+
+ALTER TABLE NHD
+DROP COLUMN PropertyAddress,OwnerAddress,TaxDistrict;
+
+SELECT * FROM NHD;
