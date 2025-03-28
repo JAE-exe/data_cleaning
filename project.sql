@@ -50,8 +50,28 @@ ADD PropertyCityAddress NVARCHAR(255);
 UPDATE NHD
 SET PropertyCityAddress = SUBSTRING(PropertyAddress,CHARINDEX(',',PropertyAddress)+1,LEN(PropertyAddress));
 
-SELECT 
-PARSENAME(REPLACE(OwnerAddress,',','.'),3),
-PARSENAME(REPLACE(OwnerAddress,',','.'),2),
-PARSENAME(REPLACE(OwnerAddress,',','.'),1)
-FROM NHD;
+
+--SELECT 
+--PARSENAME(REPLACE(OwnerAddress,',','.'),3),
+--PARSENAME(REPLACE(OwnerAddress,',','.'),2),
+--PARSENAME(REPLACE(OwnerAddress,',','.'),1)
+--FROM NHD;
+
+
+ALTER TABLE NHD
+ADD OwnerStreetAddress NVARCHAR(255);
+
+UPDATE NHD
+SET OwnerStreetAddress = PARSENAME(REPLACE(OwnerAddress,',','.'),3)
+
+ALTER TABLE NHD
+ADD OwnerCityAddress NVARCHAR(255);
+
+UPDATE NHD
+SET OwnerCityAddress = PARSENAME(REPLACE(OwnerAddress,',','.'),2)
+
+ALTER TABLE NHD
+ADD OwnerStateAddress NVARCHAR(255);
+
+UPDATE NHD
+SET OwnerStateAddress = PARSENAME(REPLACE(OwnerAddress,',','.'),1);
