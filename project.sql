@@ -49,3 +49,9 @@ ADD PropertyCityAddress NVARCHAR(255);
 
 UPDATE NHD
 SET PropertyCityAddress = SUBSTRING(PropertyAddress,CHARINDEX(',',PropertyAddress)+1,LEN(PropertyAddress));
+
+SELECT 
+PARSENAME(REPLACE(OwnerAddress,',','.'),3),
+PARSENAME(REPLACE(OwnerAddress,',','.'),2),
+PARSENAME(REPLACE(OwnerAddress,',','.'),1)
+FROM NHD;
